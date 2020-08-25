@@ -2,8 +2,8 @@ module Phone where
 
 import           Data.Char     (isAlpha, isUpper, toLower, toUpper)
 import           Data.Function (on)
-import           Data.List     (find, findIndex, group, groupBy, maximumBy,
-                                sort)
+import           Data.List     (find, findIndex, group, groupBy, intercalate,
+                                maximumBy, sort)
 
 
 {-
@@ -108,7 +108,7 @@ fingerTaps = foldr fn 0
 
 
 zipMap :: (a -> b) -> [a] -> [(a, b)]
-zipMap fn xs = zipWith (,) xs (map fn xs)
+zipMap fn xs = zip xs (map fn xs)
 
 
 mostPopularLetter :: String -> Char
@@ -151,5 +151,4 @@ coolestWord :: [String] -> String
 coolestWord = fst
             . maximumBy (compare `on` snd)
             . stringToWordGroups
-            . concat
-            . map (\x -> x ++ " ") -- add a space for joining
+            . intercalate " "
